@@ -125,5 +125,73 @@ boxplot(mondata$weight[mondata$origin=="0"],
         las=1
 )
 
+n <- length(mondata$origin=="0")
+T_9 <- StudentsT(df = n - 1)
+mesures = data.frame(mondata=c("mpg", "displacement","Weight"),
+                     Moyenne=NA, Q1=NA, Mediane=NA, Q3=NA, Écarttype=NA, ErreurType=NA,
+                     IntervalleDeConfiancePourLaMoyenneBorneInférieure =NA,
+                     IntervalleDeConfiancePourLaMoyenneBorneSupérieure =NA)
+mesures$Moyenne    = sapply(1:3, function(i) mean(mondata[,i][mondata$origin=="0"]))
+mesures$Mediane = sapply(1:3, function(i) median(mondata[,i][mondata$origin=="0"]))
+mesures[1, c("Q1", "Q3")] = quantile(mondata$mpg[mondata$origin=="0"], probs = c(0.25,0.75))
+mesures[2, c("Q1", "Q3")] = quantile(mondata$displacement[mondata$origin=="0"], probs = c(0.25,0.75))
+mesures[3, c("Q1", "Q3")] = quantile(mondata$weight[mondata$origin=="0"], probs = c(0.25,0.75))
+mesures$Écarttype  = sapply(1:3, function(i) sd(mondata[,i][mondata$origin=="0"]))
+mesures$ErreurType = 
+  sapply(1:3, 
+         function(i) sqrt(
+           sum(
+             (mondata[,i][mondata$origin=="0"]-mean(mondata[,i][mondata$origin=="0"]))^2/(length(mondata[,i][mondata$origin=="0"])-1)
+           )
+         )
+         / sqrt(length(mondata[,i][mondata$origin=="0"]))
+  )
+mesures$IntervalleDeConfiancePourLaMoyenneBorneInférieure = 
+  sapply(1:3, function(i)
+    mean(mondata[,i][mondata$origin=="0"]) 
+    + quantile(T_9, 0.95/ 2) 
+    * sd(mondata[,i][mondata$origin=="0"]) / sqrt(n)
+  )
+mesures$IntervalleDeConfiancePourLaMoyenneBorneSupérieure = 
+  sapply(1:3, function(i)
+    mean(mondata[,i][mondata$origin=="0"])
+    + quantile(T_9, 1 - 0.95/ 2)
+    * sd(mondata[,i][mondata$origin=="0"]) / sqrt(n)
+  )
+mesures
 
+n <- length(mondata$origin=="1")
+T_9 <- StudentsT(df = n - 1)
+mesures = data.frame(mondata=c("mpg", "displacement","Weight"),
+                     Moyenne=NA, Q1=NA, Mediane=NA, Q3=NA, Écarttype=NA, ErreurType=NA,
+                     IntervalleDeConfiancePourLaMoyenneBorneInférieure =NA,
+                     IntervalleDeConfiancePourLaMoyenneBorneSupérieure =NA)
+mesures$Moyenne    = sapply(1:3, function(i) mean(mondata[,i][mondata$origin=="1"]))
+mesures$Mediane = sapply(1:3, function(i) median(mondata[,i][mondata$origin=="1"]))
+mesures[1, c("Q1", "Q3")] = quantile(mondata$mpg[mondata$origin=="1"], probs = c(0.25,0.75))
+mesures[2, c("Q1", "Q3")] = quantile(mondata$displacement[mondata$origin=="1"], probs = c(0.25,0.75))
+mesures[3, c("Q1", "Q3")] = quantile(mondata$weight[mondata$origin=="1"], probs = c(0.25,0.75))
+mesures$Écarttype  = sapply(1:3, function(i) sd(mondata[,i][mondata$origin=="1"]))
+mesures$ErreurType = 
+  sapply(1:3, 
+         function(i) sqrt(
+           sum(
+             (mondata[,i][mondata$origin=="1"]-mean(mondata[,i][mondata$origin=="1"]))^2/(length(mondata[,i][mondata$origin=="1"])-1)
+           )
+         )
+         / sqrt(length(mondata[,i][mondata$origin=="1"]))
+  )
+mesures$IntervalleDeConfiancePourLaMoyenneBorneInférieure = 
+  sapply(1:3, function(i)
+    mean(mondata[,i][mondata$origin=="1"]) 
+    + quantile(T_9, 0.95/ 2) 
+    * sd(mondata[,i][mondata$origin=="1"]) / sqrt(n)
+  )
+mesures$IntervalleDeConfiancePourLaMoyenneBorneSupérieure = 
+  sapply(1:3, function(i)
+    mean(mondata[,i][mondata$origin=="1"])
+    + quantile(T_9, 1 - 0.95/ 2)
+    * sd(mondata[,i][mondata$origin=="1"]) / sqrt(n)
+  )
+mesures
 
