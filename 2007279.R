@@ -63,6 +63,7 @@ mesures
 
 library(magrittr)
 library(ggplot2)
+
 multi <- data.frame(
   type = c( rep("Origin 0"), rep("Origin 1")),
   value = c( mondata$mpg[mondata$origin=="0"], mondata$mpg[mondata$origin=="1"])
@@ -74,17 +75,15 @@ multi %>%
                  position = 'identity') +
   scale_fill_manual(values=c("#69b3a2", "#404080")) +
   labs(fill="") + ggtitle('mpg')
-
-boxplot(mondata$mpg[mondata$origin=="0"]~mondata$mpg[mondata$origin=="1"],
-        data=mondata,
+boxplot(mondata$mpg[mondata$origin=="0"], 
+        mondata$mpg[mondata$origin=="1"],
         col=c("lightpink","lightblue"),
         horizontal=TRUE,
         notch=TRUE,
         main=paste("mpg de ",nrow(mondata)," de véhicules"),
         ylab="Origine",
-        las=1)
-
-
+        las=1
+)
 multi <- data.frame(
   type = c( rep("Origin 0"), rep("Origin 1")),
   value = c( mondata$displacement[mondata$origin=="0"], mondata$displacement[mondata$origin=="1"])
@@ -96,6 +95,15 @@ multi %>%
                  position = 'identity') +
   scale_fill_manual(values=c("#69b3a2", "#404080")) +
   labs(fill="") + ggtitle('displacement')
+boxplot(mondata$displacement[mondata$origin=="0"], 
+        mondata$displacement[mondata$origin=="1"],
+        col=c("lightpink","lightblue"),
+        horizontal=TRUE,
+        notch=TRUE,
+        main=paste("displacement de ",nrow(mondata)," de véhicules"),
+        ylab="Origine",
+        las=1
+)
 multi <- data.frame(
   type = c( rep("Origin 0"), rep("Origin 1")),
   value = c( mondata$weight[mondata$origin=="0"], mondata$weight[mondata$origin=="1"])
@@ -107,6 +115,15 @@ multi %>%
                  position = 'identity') +
   scale_fill_manual(values=c("#69b3a2", "#404080")) +
   labs(fill="") + ggtitle('weight')
+boxplot(mondata$weight[mondata$origin=="0"], 
+        mondata$weight[mondata$origin=="1"],
+        col=c("lightpink","lightblue"),
+        horizontal=TRUE,
+        notch=TRUE,
+        main=paste("weight de ",nrow(mondata)," de véhicules"),
+        ylab="Origine",
+        las=1
+)
 
 
 
